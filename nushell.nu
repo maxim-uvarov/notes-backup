@@ -1,0 +1,1 @@
+ls -l | where type == file | sort-by created | where created > ('2022.05.01' | into datetime) | select created name | update created {format date "%F %T"} | insert content {open $in.name | str replace -ar '(?m)^\s+' '' | str replace -ar '(?m)\s+$' '' | str replace -a '#пробуждение' ''} | reject name | to yaml | save ../заметки_по_медитации.yaml
